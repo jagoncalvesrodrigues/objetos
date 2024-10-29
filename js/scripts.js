@@ -104,40 +104,53 @@ const data2 = {
 
 const secretPhrase = phrase =>{
     const vocals = 'aeiouAEIOU';
-    let cont = 0;
-    let contcon = 0;
 
     for (let letter of phrase) {
         if (vocals.includes(letter)) {
-            cont++;
+            //Se pregunta si la vocal ya esta dentro del array
+            if(data2.firstFloor.vowels.includes(letter)===false){
+                data2.firstFloor.vowels.push(letter);
+            }
+            //se introduce la vocal en el secretCode para luego carmbiarla a numero
             data2.sixthFloor.secretCode+=letter;
         }else if(letter !== ' '){
-            contcon++;
+            //Se pregunta si la consonante ya esta dentro del array
+            if(data2.secondFloor.constants.includes(letter)===false){
+                data2.secondFloor.constants.push(letter);
+            }
             
-            if(String.fromCharCode(letter.charCodeAt(0)-1) === 'a','e','i','o','u'){
-                data2.sixthFloor.secretCode+=String.fromCharCode(letter.charCodeAt(0)-2);
+            //Si al bajar una letra esta se convierte en una vocal tendremos que restarle otro numero
+            if(['a','e','i','o','u'].includes(String.fromCharCode(letter.charCodeAt(0)-1))){
+                //en el caso de que llegue al caracter ` se hace que la letra introucida sea la z
+                if(letter.charCodeAt(0)==96){
+                    data2.sixthFloor.secretCode+=String.fromCharCode(122);
+                }else{
+                    //en caso de que el caracter no sea ` restamos 2 con nomralidad ya que te encuentras en una vocal
+                    data2.sixthFloor.secretCode+=String.fromCharCode(letter.charCodeAt(0)-2);
+                }
             }else{
+                //el valor no es una vocal asi que se va a la letra anterior
                 data2.sixthFloor.secretCode+=String.fromCharCode(letter.charCodeAt(0)-1);
             }
         }else{
+            //si es otro caracter se introduce un valor random
             data2.sixthFloor.secretCode+=String.fromCharCode(Math.floor(Math.random()*(165-33)));
         }
+        //se transforma la letra a codigo ascii y se introduce en el respectivo array
         data2.fourthFloor.asciiCode.push(letter.charCodeAt(0));
     }
-    data2.firstFloor.vowels.push(cont);
-    data2.secondFloor.constants.push(contcon);
     
+    //se divide la frase en palabras 
     const wordsArray = phrase.split(' ');
     for (const word of wordsArray) {
+        //se introducen las palabras en mayusculas y minusculas
         data2.fifthFloor.wordsInUppercase.push(word.toUpperCase());
         data2.fifthFloor.wordsInLowercase.push(word.toLowerCase());
     }
     
-    data2.sixthFloor.secretCode = data2.sixthFloor.secretCode.replaceAll('a', '1');
-    data2.sixthFloor.secretCode = data2.sixthFloor.secretCode.replaceAll('e', '2');
-    data2.sixthFloor.secretCode = data2.sixthFloor.secretCode.replaceAll('i', '3');
-    data2.sixthFloor.secretCode = data2.sixthFloor.secretCode.replaceAll('o', '4');
-    data2.sixthFloor.secretCode = data2.sixthFloor.secretCode.replaceAll('u', '5');
+    //reemplazamos las vovales en el array de secretCode las cuales se introdujeron directamente
+    data2.sixthFloor.secretCode = data2.sixthFloor.secretCode.replaceAll('a', '1').replaceAll('e', '2').replaceAll('i', '3').replaceAll('o', '4').replaceAll('u', '5');
+
 }
 
 secretPhrase('zapato bonito');
