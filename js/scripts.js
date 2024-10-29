@@ -113,7 +113,12 @@ const secretPhrase = phrase =>{
             data2.sixthFloor.secretCode+=letter;
         }else if(letter !== ' '){
             contcon++;
-            data2.sixthFloor.secretCode+=String.fromCharCode(letter.charCodeAt(0)-1);
+            
+            if(String.fromCharCode(letter.charCodeAt(0)-1) === 'a','e','i','o','u'){
+                data2.sixthFloor.secretCode+=String.fromCharCode(letter.charCodeAt(0)-2);
+            }else{
+                data2.sixthFloor.secretCode+=String.fromCharCode(letter.charCodeAt(0)-1);
+            }
         }else{
             data2.sixthFloor.secretCode+=String.fromCharCode(Math.floor(Math.random()*(165-33)));
         }
@@ -135,10 +140,12 @@ const secretPhrase = phrase =>{
     data2.sixthFloor.secretCode = data2.sixthFloor.secretCode.replaceAll('u', '5');
 }
 
-secretPhrase('Hola amigos');
+secretPhrase('zapato bonito');
 console.log(data2.firstFloor.vowels);
 console.log(data2.secondFloor.constants);
 console.log(data2.fourthFloor.asciiCode);
 console.log(data2.fifthFloor.wordsInUppercase);
 console.log(data2.fifthFloor.wordsInLowercase);
 console.log(data2.sixthFloor.secretCode);
+
+console.log(String.fromCharCode(111));
