@@ -45,10 +45,24 @@ let cont = 0;
 const changeName = document.getElementById('words');
 const previus = document.getElementById('previus');
 const next = document.getElementById('next');
-next.addEventListener('click',(array)=>{
-    changeName.textContent=`${array[cont]}`;
+
+const nextFighter = (array) =>{
+    console.log(cont)
     cont++;
     if(cont===array.length){
         cont=0;
     }
-})
+    changeName.textContent=array[cont];
+}
+const previousFighter = (array) =>{
+    console.log(cont)
+    if(cont === 0){
+        cont=array.length-1
+    }else{
+        cont--
+    }
+    changeName.textContent=array[cont];
+}
+
+next.addEventListener('click',()=>nextFighter(array));
+previus.addEventListener('click',()=>previousFighter(array));
